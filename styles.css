@@ -1,0 +1,243 @@
+/* === ПЕРЕМЕННЫЕ CSS ДЛЯ ЦВЕТОВЫХ ТЕМ === */
+:root {
+  /* Светлая тема (по умолчанию) */
+  --bg-color: white;
+  --text-color: black;
+  --container-bg: white;
+  --border-color: black;
+  --button-bg: white;
+  --button-text: black;
+  --highlight-color: #ffff99;
+  --modal-bg: rgba(0, 0, 0, 0.9);
+  --modal-text: white;
+}
+
+[data-theme="dark"] {
+  /* Тёмная тема */
+  --bg-color: black;
+  --text-color: white;
+  --container-bg: #222;
+  --border-color: white;
+  --button-bg: #222;
+  --button-text: white;
+  --highlight-color: #666;
+  --modal-bg: rgba(0, 0, 0, 0.9);
+  --modal-text: white;
+}
+
+/* === ОСНОВНЫЕ СТИЛИ === */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background: var(--container-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+/* === СТИЛИ ДЛЯ ОБЛОЖКИ === */
+.main-cover {
+  max-width: 100%;
+  height: auto;
+  max-height: 70vh;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
+  margin: 0 auto 15px;
+  display: block;
+  border: 1px solid var(--border-color);
+}
+
+/* === СТИЛИ ДЛЯ АУДИО === */
+audio {
+  margin: 15px 0;
+  max-width: 100%;
+}
+
+/* === СТИЛИ ДЛЯ ЗАГОЛОВКОВ === */
+.project-title {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Соответствие основному шрифту */
+  font-size: 1.8em; /* Немного крупнее, чем обычный текст */
+  font-weight: bold;
+  color: var(--text-color); /* Использование переменной цвета темы */
+  margin: 10px 0 5px 0; /* Отступы сверху и снизу */
+  text-align: center; /* Центрирование */
+}
+
+.project-subtitle {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Соответствие основному шрифту */
+  font-size: 1.2em; /* Меньше, чем h2 */
+  font-weight: normal; /* Обычный вес */
+  color: var(--text-color); /* Использование переменной цвета темы */
+  margin: 5px 0 10px 0; /* Отступы */
+  text-align: center; /* Центрирование */
+  opacity: 0.8; /* Чуть менее насыщенный */
+}
+
+/* === КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ === */
+.toggle-theme {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: var(--button-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-family: Consolas, monospace;
+  color: var(--button-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 1000;
+}
+
+/* === КНОПКА КОПИРОВАНИЯ ССЫЛКИ === */
+#copy-link-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2em;
+  color: var(--text-color);
+  cursor: pointer;
+  margin: 8px 5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+#copy-link-btn:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* === МОДАЛЬНОЕ ОКНО ПОДЕЛИТЬСЯ === */
+.share-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.share-modal.open {
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+}
+
+.share-modal-content {
+  background: var(--container-bg);
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+
+.share-modal-content h3 {
+  margin-top: 0;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.share-platforms {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.share-platform-btn {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.share-platform-btn:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+.close-modal-btn {
+  margin-top: 16px;
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.close-modal-btn:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+/* === ЭФФЕКТ НАЖАТИЯ НА ОБЛОЖКУ === */
+.main-cover {
+  cursor: pointer;
+}
+
+.main-cover:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* === КНОПКА "ПОДЕЛИТЬСЯ АУДИО" — ПОД АУДИО, ПО ЦЕНТРУ === */
+#share-audio-btn {
+  display: block;
+  margin: 16px auto; /* отступ сверху и снизу, центрирование */
+  padding: 10px 24px;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  max-width: 280px;
+  width: calc(100% - 40px); /* чуть меньше ширины контейнера */
+}
+
+#share-audio-btn:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+/* Для мобильных — чуть меньше ширины */
+@media (max-width: 480px) {
+  #share-audio-btn {
+    padding: 8px 20px;
+    font-size: 15px;
+    width: calc(100% - 30px);
+  }
+}
