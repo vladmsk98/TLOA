@@ -1,31 +1,29 @@
-/* === ПЕРЕМЕННЫЕ CSS ДЛЯ ЦВЕТОВЫХ ТЕМ === */
+/* === ПЕРЕМЕННЫЕ === */
 :root {
-  /* Светлая тема (по умолчанию) */
   --bg-color: white;
   --text-color: black;
   --container-bg: white;
   --border-color: black;
   --button-bg: white;
   --button-text: black;
-  --highlight-color: #ffff99;
-  --modal-bg: rgba(0, 0, 0, 0.9);
+  --highlight-color: #7d6a5a; /* ✅ сепиевый оттенок */
+  --modal-bg: rgba(0, 0, 0, 0.5);
   --modal-text: white;
 }
 
 [data-theme="dark"] {
-  /* Тёмная тема */
   --bg-color: black;
   --text-color: white;
   --container-bg: #222;
   --border-color: white;
   --button-bg: #222;
   --button-text: white;
-  --highlight-color: #666;
-  --modal-bg: rgba(0, 0, 0, 0.9);
+  --highlight-color: #a89a8c; /* светлый сепия для тёмного фона — контрастный, но мягкий */
+  --modal-bg: rgba(0, 0, 0, 0.7);
   --modal-text: white;
 }
 
-/* === ОСНОВНЫЕ СТИЛИ === */
+/* === ОСНОВА === */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -47,7 +45,7 @@ body {
   text-align: center;
 }
 
-/* === СТИЛИ ДЛЯ ОБЛОЖКИ === */
+/* === ОБЛОЖКА === */
 .main-cover {
   max-width: 100%;
   height: auto;
@@ -59,35 +57,72 @@ body {
   margin: 0 auto 15px;
   display: block;
   border: 1px solid var(--border-color);
+  cursor: pointer;
 }
 
-/* === СТИЛИ ДЛЯ АУДИО === */
+.main-cover:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* === ИНДИКАТОР АКТИВНОГО ТРЕКА === */
+.main-cover.active-track,
+.lyrics-btn.active-track {
+  box-shadow: 0 0 0 3px var(--highlight-color);
+  transition: box-shadow 0.3s ease;
+}
+
+/* === АУДИО === */
 audio {
   margin: 15px 0;
   max-width: 100%;
 }
 
-/* === СТИЛИ ДЛЯ ЗАГОЛОВКОВ === */
+/* === ЗАГОЛОВКИ === */
 .project-title {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Соответствие основному шрифту */
-  font-size: 1.8em; /* Немного крупнее, чем обычный текст */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.8em;
   font-weight: bold;
-  color: var(--text-color); /* Использование переменной цвета темы */
-  margin: 10px 0 5px 0; /* Отступы сверху и снизу */
-  text-align: center; /* Центрирование */
+  color: var(--text-color);
+  margin: 10px 0 5px 0;
+  text-align: center;
 }
 
 .project-subtitle {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Соответствие основному шрифту */
-  font-size: 1.2em; /* Меньше, чем h2 */
-  font-weight: normal; /* Обычный вес */
-  color: var(--text-color); /* Использование переменной цвета темы */
-  margin: 5px 0 10px 0; /* Отступы */
-  text-align: center; /* Центрирование */
-  opacity: 0.8; /* Чуть менее насыщенный */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.2em;
+  font-weight: normal;
+  color: var(--text-color);
+  margin: 5px 0 10px 0;
+  text-align: center;
+  opacity: 0.8;
 }
 
-/* === КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ === */
+/* === КНОПКИ — ПО ЦЕНТРУ, ОДНА ПОД ДРУГОЙ === */
+.container button.lyrics-btn,
+.container button.share-btn {
+  display: block;
+  margin: 12px auto;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  max-width: 280px;
+  width: calc(100% - 40px);
+}
+
+.container button.lyrics-btn:hover,
+.container button.share-btn:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+/* === КНОПКА ТЕМЫ === */
 .toggle-theme {
   position: fixed;
   top: 10px;
@@ -103,21 +138,27 @@ audio {
   z-index: 1000;
 }
 
-/* === КНОПКА КОПИРОВАНИЯ ССЫЛКИ === */
-#copy-link-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.2em;
+/* === ВСТРОЕННЫЙ БЛОК ТЕКСТА — БЕЛЫЙ ФОН, РАМКА, КАК В ПРИМЕРЕ === */
+.lyrics-box {
+  background: var(--container-bg); /* white / #222 */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 20px;
+  margin: 16px auto;
+  max-width: 600px;
+  width: calc(100% - 40px);
+  font-family: Consolas, monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
   color: var(--text-color);
-  cursor: pointer;
-  margin: 8px 5px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: none; /* по умолчанию скрыт */
 }
 
-#copy-link-btn:hover {
-  background: rgba(0,0,0,0.05);
+.lyrics-box .lyrics-content {
+  margin: 0;
+  padding: 0;
 }
 
 /* === МОДАЛЬНОЕ ОКНО ПОДЕЛИТЬСЯ === */
@@ -127,7 +168,7 @@ audio {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--modal-bg);
   display: none;
   justify-content: center;
   align-items: center;
@@ -147,7 +188,7 @@ audio {
   background: var(--container-bg);
   padding: 24px;
   border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 90%;
   text-align: center;
@@ -201,43 +242,52 @@ audio {
   color: var(--button-bg);
 }
 
-/* === ЭФФЕКТ НАЖАТИЯ НА ОБЛОЖКУ === */
-.main-cover {
-  cursor: pointer;
+/* === НАВИГАЦИЯ ПО ТРЕКАМ === */
+.track-nav {
+  display: flex;
+  gap: 12px;
+  margin: 0 auto 24px;
+  max-width: 600px;
 }
 
-.main-cover:active {
-  transform: scale(0.98);
-  transition: transform 0.1s ease;
-}
-
-/* === КНОПКА "ПОДЕЛИТЬСЯ АУДИО" — ПОД АУДИО, ПО ЦЕНТРУ === */
-#share-audio-btn {
-  display: block;
-  margin: 16px auto; /* отступ сверху и снизу, центрирование */
-  padding: 10px 24px;
-  font-size: 16px;
+.nav-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 1.15rem; /* ← увеличено с 4px (ошибка) до 1.15rem ≈ 18–20px */
+  line-height: 1.4;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--button-bg);
-  color: var(--button-text);
+  background: var(--container-bg);
+  color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  max-width: 280px;
-  width: calc(100% - 40px); /* чуть меньше ширины контейнера */
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-#share-audio-btn:hover {
+.nav-btn:hover {
   background: var(--button-text);
   color: var(--button-bg);
 }
 
-/* Для мобильных — чуть меньше ширины */
+.nav-btn.active {
+  background: var(--highlight-color);
+  color: white;
+  font-weight: bold;
+}
+
+/* === АДАПТИВНОСТЬ === */
 @media (max-width: 480px) {
-  #share-audio-btn {
+  .container button.lyrics-btn,
+  .container button.share-btn {
     padding: 8px 20px;
     font-size: 15px;
+    width: calc(100% - 30px);
+  }
+
+  .lyrics-box {
     width: calc(100% - 30px);
   }
 }
