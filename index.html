@@ -3,22 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TLOA</title>
+  <title>TLOA EP</title>
   <link rel="stylesheet" href="styles.css"/>
+  <meta property="og:title" content="TLOA EP">
+  <meta property="og:description" content="Разработка сайта: PYSCRIPT STUDIO, 2026">
+  <meta property="og:image" content="covers/JAZZSTREETFLOW.jpg">
+  <meta property="og:url" content="https://example.com">
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
   <div class="container">
-  <img src="covers/JAZZSTREETFLOW.jpg"
-       alt="JAZZSTREETFLOW"
-       class="main-cover">
-  <audio controls>
-    <source src="audio/JAZZSTREETFLOW.mp3" type="audio/mpeg">
-  </audio>
-  <button id="share-audio-btn" class="share-btn">Поделиться аудио</button>
-  <h2 class="project-title">TLOA EP</h2>
-  <h3 class="project-subtitle">Разработка сайта: PYSCRIPT STUDIO, 2026</h3>
-</div>
-<button class="toggle-theme" id="theme-toggle">Сменить тему</button>
+    <div class="track-nav">
+      <button class="nav-btn" data-track="TLOAINTRO">TLOAINTRO</button>
+      <button class="nav-btn" data-track="JAZZSTREETFLOW">JAZZSTREETFLOW</button>
+      <button class="nav-btn" data-track="STILLWRITING">STILLWRITING</button>
+    </div>
+    <img src="covers/TLOAINTRO.jpg" alt="TLOAINTRO" class="main-cover" data-track="TLOAINTRO">
+    <audio controls data-track="TLOAINTRO">
+      <source src="audio/TLOAINTRO.mp3" type="audio/mpeg">
+    </audio>
+    <button class="lyrics-btn" data-track="TLOAINTRO">Текст трека</button>
+    <div class="lyrics-box" data-track="TLOAINTRO" style="display: none;">
+      <pre class="lyrics-content"></pre>
+    </div>
+    <button class="share-btn" data-track="TLOAINTRO">Поделиться аудио</button>
+    <img src="covers/JAZZSTREETFLOW.jpg" alt="JAZZSTREETFLOW" class="main-cover" data-track="JAZZSTREETFLOW">
+    <audio controls data-track="JAZZSTREETFLOW">
+      <source src="audio/JAZZSTREETFLOW.mp3" type="audio/mpeg">
+    </audio>
+    <button class="lyrics-btn" data-track="JAZZSTREETFLOW">Текст трека</button>
+    <div class="lyrics-box" data-track="JAZZSTREETFLOW" style="display: none;">
+      <pre class="lyrics-content"></pre>
+    </div>
+    <button class="share-btn" data-track="JAZZSTREETFLOW">Поделиться аудио</button>
+    <img src="covers/STILLWRITING.jpg" alt="STILLWRITING" class="main-cover" data-track="STILLWRITING">
+    <audio controls data-track="STILLWRITING">
+      <source src="audio/STILLWRITING.mp3" type="audio/mpeg">
+    </audio>
+    <button class="lyrics-btn" data-track="STILLWRITING">Текст трека</button>
+    <div class="lyrics-box" data-track="STILLWRITING" style="display: none;">
+      <pre class="lyrics-content"></pre>
+    </div>
+    <button class="share-btn" data-track="STILLWRITING">Поделиться аудио</button>
+    <h2 class="project-title">TLOA EP</h2>
+    <h3 class="project-subtitle">Разработка сайта: PYSCRIPT STUDIO, 2026</h3>
+  </div>
+  <button class="toggle-theme" id="theme-toggle">Сменить тему</button>
   <div id="share-modal" class="share-modal">
     <div class="share-modal-content">
       <h3>Поделиться аудио</h3>
