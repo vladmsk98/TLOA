@@ -3,34 +3,50 @@
 // === Конфигурация текстов треков ===
 const LYRICS_MAP = {
   TLOAINTRO: `[Куплет]
-The last of albums, it's real
-This final verse, in raw we feel
-No more games, just that's ideal
-Leaving a mark that won’t conceal
+The last of albums
+It's real
+This final verse
+In raw we feel
+No more games
+Just that's ideal
+Leaving a mark
+That won’t conceal
 
 [Проигрыш]
 
 [Куплет]
-The last of albums, it's real
-Built dream with strength of music steel
-Fate and rhythm made the deal
-Now the truth begins to reveal
+The last of albums
+It's real
+Built dream with strength
+Of music steel
+Fate and rhythm
+Made the deal
+Now the truth
+Begins to reveal
 
 [Проигрыш]
 
 [Куплет]
-The last of albums, it's real
-Every scar we dare reveal
-Wrote own pain, made it appeal
-Now it echoes — sharp, surreal
+The last of albums
+It's real
+Every scar
+We dare reveal
+Wrote own pain
+Made it appeal
+Now it echoes
+Sharp, surreal
 
 [Проигрыш]
 
 [Куплет]
-The last of albums, it's real
-Time to rise and break the seal
-This is more than just a reel
-The last of albums, it's real`,
+The last of albums
+It's real
+Time to rise
+And break the seal
+This is more
+Than just a reel
+The last of albums
+It's real`,
 
   JAZZSTREETFLOW: `[Припев]
 Every bar's a hit
@@ -61,6 +77,10 @@ Every bar's a hit
 Sweat dripping heat
 Tank runs on gas
 Improvise like jazz
+
+[Проигрыш]
+
+[Припев]
 Every bar's a hit
 Sweat dripping heat
 Tank runs on gas
@@ -72,33 +92,43 @@ Improvise like jazz`,
 
   STILLWRITING: `[Припев]
 Ya-ya-ya-ya
-I'm still writing my own light reality
+I'm still writing
+My own light reality
 And it's real
 I feel, I feel
 
 [Рэп-куплет]
-Yeah, yo, yeah, yo, I'm still writing
-Earlier it was like overwriting
-Life was a VHS, scratchy, sincere
-Camcorder kid, shootin’ the atmosphere
-This is my life, uncut, real, ya
-No filters, just the truth, only-only yeah
-I’m the product of "maybe tomorrow" and "no"
+Yeah, yo, yeah, yo
+I'm still writing
+Earlier it was
+Like overwriting
+Life was a VHS
+Scratchy, sincere
+Camcorder kid
+Shootin’ the atmosphere
+This is my life
+Uncut, real, ya
+No filters, just the truth
+Only-only yeah
+I’m the product of
+"Maybe tomorrow" and "no"
 But summary seems like gold, yo
 
 [Переход]
-I'm still shootin’ my life
-Because it never asked me for skipping itself
+I'm still
+Shootin’ my life
+Because it never asked me
+For skipping itself
 
 [Припев]
 Ya-ya-ya-ya
-I'm still writing my own light reality
+I'm still writing
+My own light reality
 And it's real
 I feel, I feel`
 };
 
-// === DOM-элементы ===
-const themeToggle = document.getElementById('theme-toggle');
+// === DOM-элементы ===const themeToggle = document.getElementById('theme-toggle');
 const shareModal = document.getElementById('share-modal');
 const closeShareModal = document.getElementById('close-share-modal');
 const sharePlatformButtons = document.querySelectorAll('.share-platform-btn');
@@ -119,9 +149,7 @@ document.querySelectorAll('.main-cover').forEach(cover => {
       audio.play().catch(e => console.warn('Автовоспроизведение заблокировано:', e));
       // Добавляем активность
       cover.classList.add('active-track');
-      const lyricsBtn = cover.nextElementSibling?.classList?.contains('lyrics-btn')
-        ? cover.nextElementSibling
-        : document.querySelector(`.lyrics-btn[data-track="${trackId}"]`);
+      const lyricsBtn = document.querySelector(`.lyrics-btn[data-track="${trackId}"]`);
       if (lyricsBtn) lyricsBtn.classList.add('active-track');
     } else {
       audio.pause();
@@ -133,42 +161,10 @@ document.querySelectorAll('.main-cover').forEach(cover => {
   });
 });
 
-// === НАВИГАЦИЯ ПО ТРЕКАМ ===
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const trackId = btn.dataset.track;
-
-    // Снимаем active со всех
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    // Прокручиваем к нужному треку
-    const targetImg = document.querySelector(`img[data-track="${trackId}"]`);
-    if (targetImg) {
-      targetImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// === ИНИЦИАЛИЗАЦИЯ АКТИВНОЙ КНОПКИ ПРИ ЗАГРУЗКЕ (опционально) ===
-window.addEventListener('load', () => {
-  const hash = location.hash.slice(1);
-  if (hash && ['TLOAINTRO', 'JAZZSTREETFLOW', 'STILLWRITING'].includes(hash)) {
-    const activeBtn = document.querySelector(`.nav-btn[data-track="${hash}"]`);
-    if (activeBtn) {
-      activeBtn.classList.add('active');
-      const img = document.querySelector(`img[data-track="${hash}"]`);
-      if (img) img.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  } else {
-    // По умолчанию активна первая кнопка
-    document.querySelector('.nav-btn:first-child')?.classList.add('active');
-  }
-});
-
 // === Кнопка «Текст трека» — показывает встроенный блок ===
 document.querySelectorAll('.lyrics-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    // Не снимаем активность при клике на кнопку текста, чтобы не сбивать индикатор
     const trackId = btn.dataset.track;
     const lyricsBox = btn.nextElementSibling; // .lyrics-box должен идти сразу после .lyrics-btn
 
@@ -181,8 +177,7 @@ document.querySelectorAll('.lyrics-btn').forEach(btn => {
     if (text) {
       lyricsBox.querySelector('.lyrics-content').textContent = text;
       // Переключаем видимость
-      lyricsBox.style.display = lyricsBox.style.display === 'none' ? 'block' : 'none';
-    } else {
+      lyricsBox.style.display = lyricsBox.style.display === 'none' ? 'block' : 'none';    } else {
       console.error('Текст для трека', trackId, 'не найден');
     }
   });
@@ -231,8 +226,7 @@ sharePlatformButtons.forEach(btn => {
       case 'copy':
         navigator.clipboard.writeText(window.location.href)
           .then(() => {
-            btn.textContent = '✓';
-            setTimeout(() => btn.textContent = 'Копировать ссылку', 1200);
+            btn.textContent = '✓';            setTimeout(() => btn.textContent = 'Копировать ссылку', 1200);
           })
           .catch(() => {
             btn.textContent = '⚠';
@@ -255,17 +249,52 @@ themeToggle.addEventListener('click', () => {
   document.body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
 });
 
-// === АВТО-СКРОЛЛ К ТРЕКУ ПО ЯКОРЮ ===
-window.addEventListener('load', () => {
-  const hash = location.hash.slice(1); // убираем '#'
-  if (!hash) return;
+// === НАВИГАЦИЯ ПО ТРЕКАМ ===
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const trackId = btn.dataset.track;
 
-  // Ищем элемент с data-track == hash
-  const targetElement = document.querySelector(`[data-track="${hash}"]`);
-  if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Опционально: выделяем трек (см. Этап 2)
-  } else {
-    console.warn(`Трек с data-track="${hash}" не найден`);
+    // Снимаем active со всех
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Прокручиваем к нужному треку
+    const targetImg = document.querySelector(`img[data-track="${trackId}"]`);
+    if (targetImg) {
+      targetImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// === ИНИЦИАЛИЗАЦИЯ АКТИВНОЙ КНОПКИ ПРИ ЗАГРУЗКЕ ===
+window.addEventListener('load', () => {
+  const hash = location.hash.slice(1);
+  if (hash && ['TLOAINTRO', 'JAZZSTREETFLOW', 'STILLWRITING'].includes(hash)) {
+    const activeBtn = document.querySelector(`.nav-btn[data-track="${hash}"]`);
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      const img = document.querySelector(`img[data-track="${hash}"]`);
+      if (img) img.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }  } else {
+    // По умолчанию активна первая кнопка
+    document.querySelector('.nav-btn:first-child')?.classList.add('active');
   }
+});
+
+// === АВТО-СКРОЛЛ К ТРЕКУ ПО ЯКОРЮ (остаётся как резервный вариант) ===
+// window.addEventListener('load', () => {
+//   const hash = location.hash.slice(1);
+//   if (!hash) return;
+//   const targetElement = document.querySelector(`[data-track="${hash}"]`);
+//   if (targetElement) {
+//     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+//   } else {
+//     console.warn(`Трек с data-track="${hash}" не найден`);
+//   }
+// });
+
+// === РАСКРЫВАЮЩИЙСЯ БЛОК ОПИСАНИЯ ===
+document.querySelector('.info-toggle')?.addEventListener('click', () => {
+  const content = document.querySelector('.info-content');
+  content.style.display = content.style.display === 'none' ? 'block' : 'none';
 });
