@@ -18,7 +18,7 @@
   --border-color: white;
   --button-bg: #222;
   --button-text: white;
-  --highlight-color: #a89a8c; /* светлый сепия для тёмного фона — контрастный, но мягкий */
+  --highlight-color: #a89a8c; /* светлый сепия для тёмного фона */
   --modal-bg: rgba(0, 0, 0, 0.7);
   --modal-text: white;
 }
@@ -47,8 +47,7 @@ body {
 
 /* === ОБЛОЖКА === */
 .main-cover {
-  max-width: 100%;
-  height: auto;
+  max-width: 100%;  height: auto;
   max-height: 70vh;
   width: auto;
   object-fit: contain;
@@ -63,13 +62,6 @@ body {
 .main-cover:active {
   transform: scale(0.98);
   transition: transform 0.1s ease;
-}
-
-/* === ИНДИКАТОР АКТИВНОГО ТРЕКА === */
-.main-cover.active-track,
-.lyrics-btn.active-track {
-  box-shadow: 0 0 0 3px var(--highlight-color);
-  transition: box-shadow 0.3s ease;
 }
 
 /* === АУДИО === */
@@ -98,6 +90,87 @@ audio {
   opacity: 0.8;
 }
 
+/* === ОПИСАНИЕ АЛЬБОМА === */
+.album-desc {
+  font-size: 1.1em;
+  color: var(--text-color);
+  opacity: 0.85;
+  margin: 8px auto 16px;
+  max-width: 600px;  text-align: center;
+  font-style: italic;
+}
+
+/* === НАВИГАЦИЯ ПО ТРЕКАМ === */
+.track-nav {
+  display: flex;
+  gap: 12px;
+  margin: 0 auto 24px;
+  max-width: 600px;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 1.15rem; /* увеличенный шрифт */
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--container-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-btn:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+.nav-btn.active {
+  background: var(--highlight-color);
+  color: white;
+  font-weight: bold;
+}
+
+/* === РАСКРЫВАЮЩИЙСЯ БЛОК ОПИСАНИЯ === */
+.album-info {
+  margin: 24px auto;
+  max-width: 600px;
+}
+
+.info-toggle {
+  width: 100%;
+  padding: 12px 16px; /* увеличено */
+  font-size: 1.15rem; /* увеличенный шрифт */  background: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: -apple-system, sans-serif;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.info-toggle:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+.info-content {
+  margin-top: 12px;
+  padding: 16px;
+  background: var(--container-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 1.1rem; /* увеличенный шрифт текста */
+  line-height: 1.6;
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
 /* === КНОПКИ — ПО ЦЕНТРУ, ОДНА ПОД ДРУГОЙ === */
 .container button.lyrics-btn,
 .container button.share-btn {
@@ -121,6 +194,12 @@ audio {
   background: var(--button-text);
   color: var(--button-bg);
 }
+/* === ИНДИКАТОР АКТИВНОГО ТРЕКА === */
+.main-cover.active-track,
+.lyrics-btn.active-track {
+  box-shadow: 0 0 0 3px var(--highlight-color);
+  transition: box-shadow 0.3s ease;
+}
 
 /* === КНОПКА ТЕМЫ === */
 .toggle-theme {
@@ -138,9 +217,9 @@ audio {
   z-index: 1000;
 }
 
-/* === ВСТРОЕННЫЙ БЛОК ТЕКСТА — БЕЛЫЙ ФОН, РАМКА, КАК В ПРИМЕРЕ === */
+/* === ВСТРОЕННЫЙ БЛОК ТЕКСТА — БЕЛЫЙ ФОН, РАМКА === */
 .lyrics-box {
-  background: var(--container-bg); /* white / #222 */
+  background: var(--container-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 20px;
@@ -153,7 +232,7 @@ audio {
   white-space: pre-wrap;
   color: var(--text-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  display: none; /* по умолчанию скрыт */
+  display: none;
 }
 
 .lyrics-box .lyrics-content {
@@ -164,8 +243,7 @@ audio {
 /* === МОДАЛЬНОЕ ОКНО ПОДЕЛИТЬСЯ === */
 .share-modal {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0;  left: 0;
   width: 100%;
   height: 100%;
   background-color: var(--modal-bg);
@@ -214,8 +292,7 @@ audio {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   background: var(--button-bg);
-  color: var(--button-text);
-  cursor: pointer;
+  color: var(--button-text);  cursor: pointer;
   font-size: 16px;
   transition: all 0.2s ease;
 }
@@ -242,42 +319,6 @@ audio {
   color: var(--button-bg);
 }
 
-/* === НАВИГАЦИЯ ПО ТРЕКАМ === */
-.track-nav {
-  display: flex;
-  gap: 12px;
-  margin: 0 auto 24px;
-  max-width: 600px;
-}
-
-.nav-btn {
-  flex: 1;
-  padding: 10px 16px;
-  font-size: 1.15rem; /* ← увеличено с 4px (ошибка) до 1.15rem ≈ 18–20px */
-  line-height: 1.4;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: var(--container-bg);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.nav-btn:hover {
-  background: var(--button-text);
-  color: var(--button-bg);
-}
-
-.nav-btn.active {
-  background: var(--highlight-color);
-  color: white;
-  font-weight: bold;
-}
-
 /* === АДАПТИВНОСТЬ === */
 @media (max-width: 480px) {
   .container button.lyrics-btn,
@@ -289,5 +330,13 @@ audio {
 
   .lyrics-box {
     width: calc(100% - 30px);
+  }
+
+  .nav-btn {
+    font-size: 1rem; /* чуть уменьшен на мобильных */
+  }
+
+  .info-toggle, .info-content {
+    font-size: 1rem;
   }
 }
