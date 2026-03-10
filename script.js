@@ -47,7 +47,6 @@ This is more
 Than just a reel
 The last of albums
 It's real`,
-
   JAZZSTREETFLOW: `[Припев]
 Every bar's a hit
 Sweat dripping heat
@@ -97,8 +96,7 @@ My own light reality
 And it's real
 I feel, I feel
 
-[Рэп-куплет]
-Yeah, yo, yeah, yo
+[Рэп-куплет]Yeah, yo, yeah, yo
 I'm still writing
 Earlier it was
 Like overwriting
@@ -128,7 +126,8 @@ And it's real
 I feel, I feel`
 };
 
-// === DOM-элементы ===const themeToggle = document.getElementById('theme-toggle');
+// === DOM-элементы ===
+const themeToggle = document.getElementById('theme-toggle');
 const shareModal = document.getElementById('share-modal');
 const closeShareModal = document.getElementById('close-share-modal');
 const sharePlatformButtons = document.querySelectorAll('.share-platform-btn');
@@ -146,8 +145,7 @@ document.querySelectorAll('.main-cover').forEach(cover => {
       .forEach(el => el.classList.remove('active-track'));
 
     if (audio.paused) {
-      audio.play().catch(e => console.warn('Автовоспроизведение заблокировано:', e));
-      // Добавляем активность
+      audio.play().catch(e => console.warn('Автовоспроизведение заблокировано:', e));      // Добавляем активность
       cover.classList.add('active-track');
       const lyricsBtn = document.querySelector(`.lyrics-btn[data-track="${trackId}"]`);
       if (lyricsBtn) lyricsBtn.classList.add('active-track');
@@ -177,7 +175,8 @@ document.querySelectorAll('.lyrics-btn').forEach(btn => {
     if (text) {
       lyricsBox.querySelector('.lyrics-content').textContent = text;
       // Переключаем видимость
-      lyricsBox.style.display = lyricsBox.style.display === 'none' ? 'block' : 'none';    } else {
+      lyricsBox.style.display = lyricsBox.style.display === 'none' ? 'block' : 'none';
+    } else {
       console.error('Текст для трека', trackId, 'не найден');
     }
   });
@@ -195,8 +194,7 @@ document.querySelectorAll('.share-btn').forEach(btn => {
 closeShareModal.addEventListener('click', () => {
   shareModal.classList.remove('open');
   document.body.style.overflow = '';
-});
-shareModal.addEventListener('click', (e) => {
+});shareModal.addEventListener('click', (e) => {
   if (e.target === shareModal) {
     shareModal.classList.remove('open');
     document.body.style.overflow = '';
@@ -226,7 +224,8 @@ sharePlatformButtons.forEach(btn => {
       case 'copy':
         navigator.clipboard.writeText(window.location.href)
           .then(() => {
-            btn.textContent = '✓';            setTimeout(() => btn.textContent = 'Копировать ссылку', 1200);
+            btn.textContent = '✓';
+            setTimeout(() => btn.textContent = 'Копировать ссылку', 1200);
           })
           .catch(() => {
             btn.textContent = '⚠';
@@ -244,8 +243,7 @@ sharePlatformButtons.forEach(btn => {
 });
 
 // === Тема ===
-themeToggle.addEventListener('click', () => {
-  const current = document.body.getAttribute('data-theme');
+themeToggle.addEventListener('click', () => {  const current = document.body.getAttribute('data-theme');
   document.body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
 });
 
@@ -275,23 +273,12 @@ window.addEventListener('load', () => {
       activeBtn.classList.add('active');
       const img = document.querySelector(`img[data-track="${hash}"]`);
       if (img) img.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }  } else {
+    }
+  } else {
     // По умолчанию активна первая кнопка
     document.querySelector('.nav-btn:first-child')?.classList.add('active');
   }
 });
-
-// === АВТО-СКРОЛЛ К ТРЕКУ ПО ЯКОРЮ (остаётся как резервный вариант) ===
-// window.addEventListener('load', () => {
-//   const hash = location.hash.slice(1);
-//   if (!hash) return;
-//   const targetElement = document.querySelector(`[data-track="${hash}"]`);
-//   if (targetElement) {
-//     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-//   } else {
-//     console.warn(`Трек с data-track="${hash}" не найден`);
-//   }
-// });
 
 // === РАСКРЫВАЮЩИЙСЯ БЛОК ОПИСАНИЯ ===
 document.querySelector('.info-toggle')?.addEventListener('click', () => {
