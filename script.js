@@ -108,8 +108,7 @@ Camcorder kid
 Shootin’ the atmosphere
 This is my life
 Uncut, real, ya
-No filters
-Just the truth
+No filters, just the truth
 Only-only yeah
 I’m the product of
 "Maybe tomorrow" and "no"
@@ -151,9 +150,7 @@ document.querySelectorAll('.main-cover').forEach(cover => {
       audio.play().catch(e => console.warn('Автовоспроизведение заблокировано:', e));
       // Добавляем активность
       cover.classList.add('active-track');
-      const lyricsBtn = cover.nextElementSibling?.classList?.contains('lyrics-btn')
-        ? cover.nextElementSibling
-        : document.querySelector(`.lyrics-btn[data-track="${trackId}"]`);
+      const lyricsBtn = document.querySelector(`.lyrics-btn[data-track="${trackId}"]`);
       if (lyricsBtn) lyricsBtn.classList.add('active-track');
     } else {
       audio.pause();
@@ -165,42 +162,10 @@ document.querySelectorAll('.main-cover').forEach(cover => {
   });
 });
 
-// === НАВИГАЦИЯ ПО ТРЕКАМ ===
-document.querySelectorAll('.nav-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const trackId = btn.dataset.track;
-
-    // Снимаем active со всех
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    // Прокручиваем к нужному треку
-    const targetImg = document.querySelector(`img[data-track="${trackId}"]`);
-    if (targetImg) {
-      targetImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// === ИНИЦИАЛИЗАЦИЯ АКТИВНОЙ КНОПКИ ПРИ ЗАГРУЗКЕ (опционально) ===
-window.addEventListener('load', () => {
-  const hash = location.hash.slice(1);
-  if (hash && ['TLOAINTRO', 'JAZZSTREETFLOW', 'STILLWRITING'].includes(hash)) {
-    const activeBtn = document.querySelector(`.nav-btn[data-track="${hash}"]`);
-    if (activeBtn) {
-      activeBtn.classList.add('active');
-      const img = document.querySelector(`img[data-track="${hash}"]`);
-      if (img) img.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  } else {
-    // По умолчанию активна первая кнопка
-    document.querySelector('.nav-btn:first-child')?.classList.add('active');
-  }
-});
-
 // === Кнопка «Текст трека» — показывает встроенный блок ===
 document.querySelectorAll('.lyrics-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
+  btn.addEventListener('click', (e) => {
+    // Не снимаем активность при клике на кнопку текста, чтобы не сбивать индикатор
     const trackId = btn.dataset.track;
     const lyricsBox = btn.nextElementSibling; // .lyrics-box должен идти сразу после .lyrics-btn
 
@@ -287,22 +252,112 @@ themeToggle.addEventListener('click', () => {
   document.body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
 });
 
-// === АВТО-СКРОЛЛ К ТРЕКУ ПО ЯКОРЮ ===
-window.addEventListener('load', () => {
-  const hash = location.hash.slice(1); // убираем '#'
-  if (!hash) return;
+// === НАВИГАЦИЯ ПО ТРЕКАМ ===
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const trackId = btn.dataset.track;
 
-  // Ищем элемент с data-track == hash
-  const targetElement = document.querySelector(`[data-track="${hash}"]`);
-  if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Опционально: выделяем трек (см. Этап 2)
+    // Снимаем active со всех
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Прокручиваем к нужному треку
+    const targetImg = document.querySelector(`img[data-track="${trackId}"]`);
+    if (targetImg) {
+      targetImg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// === ИНИЦИАЛИЗАЦИЯ АКТИВНОЙ КНОПКИ ПРИ ЗАГРУЗКЕ ===
+window.addEventListener('load', () => {
+  const hash = location.hash.slice(1);
+  if (hash && ['TLOAINTRO', 'JAZZSTREETFLOW', 'STILLWRITING'].includes(hash)) {
+    const activeBtn = document.querySelector(`.nav-btn[data-track="${hash}"]`);
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+      const img = document.querySelector(`img[data-track="${hash}"]`);
+      if (img) img.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   } else {
-    console.warn(`Трек с data-track="${hash}" не найден`);
+    // По умолчанию активна первая кнопка
+    document.querySelector('.nav-btn:first-child')?.classList.add('active');
   }
 });
 
+// === РАСКРЫВАЮЩИЙСЯ БЛОК ОПИСАНИЯ ===
 document.querySelector('.info-toggle')?.addEventListener('click', () => {
   const content = document.querySelector('.info-content');
   content.style.display = content.style.display === 'none' ? 'block' : 'none';
+});
+
+// === КНОПКА СКАЧИВАНИЯ ===
+document.querySelectorAll('.download-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const trackId = btn.dataset.track;
+    const filePath = `audio/${trackId}.mp3`;
+    const fileName = `${trackId}.mp3`;
+
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+});
+
+// === КНОПКА ИСТОРИИ СОЗДАНИЯ ===
+document.querySelectorAll('.history-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const trackId = btn.dataset.track;
+    const historyBox = document.querySelector(`.history-box[data-track="${trackId}"]`);
+
+    if (historyBox) {
+      historyBox.style.display = historyBox.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+});
+
+// === РЕЙТИНГ ТРЕКОВ ===
+// Функция обновления отображения рейтинга для конкретного трека
+function updateRatingDisplay(trackId) {
+  const ratingValue = parseInt(localStorage.getItem(`rating_${trackId}`)) || 0;
+  const stars = document.querySelectorAll(`.rating-container[data-track="${trackId}"] .rating-star`);
+  const display = document.querySelector(`.rating-container[data-track="${trackId}"] .rating-display`);
+
+  stars.forEach((star, index) => {
+    if (index < ratingValue) {
+      star.textContent = '★'; // Заполненная звезда
+      star.classList.add('active');
+    } else {
+      star.textContent = '☆'; // Пустая звезда
+      star.classList.remove('active');
+    }
+  });
+
+  if (display) {
+    display.textContent = `${ratingValue}/5`;
+  }
+}
+
+// Инициализация отображения для всех треков при загрузке
+document.querySelectorAll('.rating-container').forEach(container => {
+  const trackId = container.dataset.track;
+  updateRatingDisplay(trackId);
+});
+
+// Обработчик кликов по звёздам
+document.querySelectorAll('.rating-star').forEach(star => {
+  star.addEventListener('click', function() {
+    const trackId = this.closest('.rating-container').dataset.track;
+    const value = parseInt(this.dataset.value);
+
+    // Сохраняем оценку в localStorage
+    localStorage.setItem(`rating_${trackId}`, value);
+
+    // Обновляем отображение
+    updateRatingDisplay(trackId);
+  });
 });
